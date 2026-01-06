@@ -1,0 +1,25 @@
+<div class="app-container">
+  <header class="app-header">
+    <div class="container">
+      <h1>{{ title }}</h1>
+      <p class="subtitle">Sistema de gestión de transacciones financieras</p>
+    </div>
+  </header>
+  
+  <main class="main-content">
+    <div class="container">
+      <app-transaction-form 
+        (transactionCreated)="onTransactionCreated()">
+      </app-transaction-form>
+      
+      <app-transaction-list></app-transaction-list>
+    </div>
+  </main>
+  
+  <footer class="app-footer">
+    <div class="container">
+      <p>&copy; 2025 Sofka Technologies. Todos los derechos reservados.</p>
+      <p class="version">Version 1.0.0</p>
+    </div>
+  </footer>
+</div>

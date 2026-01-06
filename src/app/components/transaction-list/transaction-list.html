@@ -1,1 +1,59 @@
-<p>transaction-list works!</p>
+<div class="transaction-list-container">
+  <div class="header">
+    <h2>Historial de Transacciones</h2>
+    <button class="btn-refresh" (click)="refresh()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">🔄 Actualizar</span>
+      <span *ngIf="isLoading">⏳ Cargando...</span>
+    </button>
+  </div>
+  
+  <div *ngIf="isLoading && transactions.length === 0" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando transacciones...</p>
+  </div>
+  
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+  
+  <div *ngIf="!isLoading && transactions.length === 0 && !errorMessage" class="empty-state">
+    <p>📊 No hay transacciones registradas</p>
+    <small>Crea tu primera transacción usando el formulario arriba</small>
+  </div>
+  
+  <div *ngIf="transactions.length > 0" class="table-container">
+    <table class="transactions-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Monto</th>
+          <th>Comisión</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions" class="transaction-row">
+          <td class="id-cell">{{ transaction.id }}</td>
+          <td class="amount-cell" [ngClass]="getAmountClass(transaction.monto)">
+            {{ formatCurrency(transaction.monto) }}
+          </td>
+          <td class="commission-cell">
+            {{ formatCurrency(transaction.comision) }}
+          </td>
+          <td class="date-cell">
+            {{ formatDate(transaction.fecha) }}
+          </td>
+          <td class="status-cell">
+            <span class="badge">{{ transaction.mensaje }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="footer">
+      <p>Total de transacciones: <strong>{{ transactions.length }}</strong></p>
+      <small>Actualización automática cada 5 segundos</small>
+    </div>
+  </div>
+</div>
